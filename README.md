@@ -2,85 +2,100 @@
 
 ## Overview
 
-**Add Contact Plugin**  is a plugin to open "New Contact" popup native ios so user can add the
+**[Add Contact Plugin]((https://pub.dev/packages/add_contact_ios)    )** is a plugin to open "New
+Contact" popup native ios so user can add the  
 contact to device
 
-[![pub  
-package](https://img.shields.io/pub/v/add_contact_plugin.svg)](https://pub.dartlang.org/packages/add_contact_plugin)  
-<a href="https://pub.dev/packages/fl_chart"><img alt="GitHub Repo  
-stars"  
-src="https://img.shields.io/github/stars/hoangduchuu/add_contact_plugin"></a>  
-<a href="https://github.com/hoangduchuu/add_contact_plugin/graphs/contributors"><img  
-alt="GitHub contributors"  
-src="https://img.shields.io/github/contributors/hoangduchuu/add_contact_plugin"></a>  
-<a href="https://githubc.comhoangduchuu/add_contact_pluginissues?q=is%3Aissue+is%3Aclosed"><img  
-src="https://img.shields.io/github/issues-closed-raw/hoangduchuu/add_contact_plugin"  
+[![pub package](https://img.shields.io/pub/v/add_contact_ios.svg)](https://pub.dev/packages/add_contact_ios)    
+<a href="https://pub.dev/packages/fl_chart"><img alt="GitHub Repo    
+stars"    
+src="https://img.shields.io/github/stars/hoangduchuu/add_contact_plugin"></a>    
+<a href="https://github.com/hoangduchuu/add_contact_plugin/graphs/contributors"><img    
+alt="GitHub contributors"    
+src="https://img.shields.io/github/contributors/hoangduchuu/add_contact_plugin"></a>    
+<a href="https://githubc.comhoangduchuu/add_contact_pluginissues?q=is%3Aissue+is%3Aclosed"><img    
+src="https://img.shields.io/github/issues-closed-raw/hoangduchuu/add_contact_plugin"    
 alt="GitHub closed issues"> </a>
 
 ## Usage
 
 ### 1. Mock the Contact model
 
-    final mockContact = Contact(  
-      displayName: "BI-DISPLAY",  
-      givenName: "HOANG DUC",  
-      middleName: "HUU",  
-      prefix: "Mr.",  
-      suffix: "Jr.",  
-      familyName: "BEE",  
-      company: "Carrots Labs🥕",  
-      jobTitle: "Flutter  Engineer",  
-      emails: [  
-        Item(label: "work", value: "huu@carrots.so"),  
-        Item(label: "personal", value: "example@gmail.com"),  
-      ],  
-      phones: [  
-        Item(label: "mobile", value: "+1 (555) 123-4567"),  
-        Item(label: "work", value: "+1 (555) 987-6543"),  
-      ],  
-      postalAddresses: [  
-        PostalAddress(  
-          label: "home",  
-          street: "80 Quoc Lo 13",  
-          city: "Ho CHi Minh",  
-          postcode: "12345",  
-          region: "VN",  
-          country: "VN",  
-        ),  
-        PostalAddress(  
-          label: "Daklak-Home",  
-          street: "56 Xuan Phu - Phu Xuan",  
-          city: "Krong Nang",  
-          postcode: "12345",  
-          region: "VN",  
-          country: "VN",  
-        ),  
-      ],  
-      socialProfiles: [  
-        SocialProfile(  
-          label: "twitter",  
-          urlString: "https://twitter.com/hoangduchuuvn",  
-          username: "hoangduchuuvn",  
-          service: "twitter",  
-        ),  
-        SocialProfile(  
-          label: "facebook",  
-          urlString: "https://facebook.com/hoangduchuuvn",  
-          username: "hoangduchuuvn",  
-          service: "facebook",  
-        ),  
-      ],  
-      avatar: Uint8List.fromList([0, 1, 2, 3, 4, 5]),  
-      birthday: DateTime(1994, 1, 1),  
-      androidAccountType: AndroidAccountType.google,  
-      androidAccountTypeRaw: "com.google",  
-      androidAccountName: "johndoe@gmail.com",  
-    );
+     final mockContact = Contact(      
+          displayName: "BI DEP TRAI",    
+          givenName: "HOANG DUC",    
+          middleName: "HUU",    
+          prefix: "Mr.",    
+          suffix: "Jr.",    
+          familyName: "BEE",    
+          company: "Carrots Labs🥕",    
+          jobTitle: "Flutter  Engineer",    
+          emails: [    
+            Item(label: "work", value: "huu@carrots.so"),    
+            Item(label: "personal", value: "example@gmail.com"),    
+          ],    
+          phones: [    
+            Item(label: "mobile", value: "+1 (555) 123-4567"),    
+            Item(label: "work", value: "+1 (555) 987-6543"),    
+          ],    
+          postalAddresses: [    
+            PostalAddress(    
+              label: "home",    
+              street: "80 Quoc Lo 13",    
+              city: "Ho CHi Minh",    
+              postcode: "12345",    
+              region: "VN",    
+              country: "VN",    
+            ),    
+            PostalAddress(    
+              label: "Daklak-Home",    
+              street: "56 Xuan Phu - Phu Xuan",    
+              city: "Krong Nang",    
+              postcode: "12345",    
+              region: "VN",    
+              country: "VN",    
+            ),    
+          ],    
+          socialProfiles: [    
+            SocialProfile(    
+              label: "twitter",    
+              urlString: "https://twitter.com/hoangduchuuvn",    
+              username: "hoangduchuuvn",    
+              service: "twitter",    
+            ),    
+            SocialProfile(    
+              label: "facebook",    
+              urlString: "https://facebook.com/hoangduchuuvn",    
+              username: "hoangduchuuvn",    
+              service: "facebook",    
+            ),    
+          ],    
+          avatar: Uint8List.fromList([0, 1, 2, 3, 4, 5]),    
+          birthday: DateTime(1994, 1, 1),    
+          androidAccountType: AndroidAccountType.google,    
+          androidAccountTypeRaw: "com.google",    
+          androidAccountName: "johndoe@gmail.com",    
+        );  
 
 ### 2. Open the ios dialog
 
-    AddContactIos().addContact(contact: contact)
+##### 2a. Add the Contact
 
-## Showcase
+     AddContactIos().addContact(contact: contact)  
 
-![](https://raw.githubusercontent.com/hoangduchuu/add_contact_plugin/main/showcase/showcase.gif)
+##### 2b. Add open vCard
+
+     AddContactIos().openVCard(contact: contact)  
+
+## Showcases
+
+![Add Promt](https://raw.githubusercontent.com/hoangduchuu/add_contact_plugin/main/showcase/add_new.gif)![Show VCard](https://raw.githubusercontent.com/hoangduchuu/add_contact_plugin/main/showcase/open_vcard.gif)
+
+## Installation
+
+[View on Pub.dev](https://pub.dev/packages/add_contact_ios)
+
+    dependencies:  
+    add_contact_ios: ^X.Y.Z // lasted version 
+
+

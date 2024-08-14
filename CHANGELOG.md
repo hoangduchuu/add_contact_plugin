@@ -1,3 +1,5 @@
+## 0.0.5
+- Add `openVCard` method
 ## 0.0.4
 
 - Apply lint check to the plugin.

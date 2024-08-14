@@ -1,4 +1,5 @@
 import 'package:add_contact_ios/contact_model.dart';
+import 'package:add_contact_ios/enum.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:add_contact_ios/add_contact_ios.dart';
 import 'package:add_contact_ios/add_contact_ios_platform_interface.dart';
@@ -9,8 +10,14 @@ class MockAddContactIosPlatform
     with MockPlatformInterfaceMixin
     implements AddContactIosPlatform {
   @override
-  Future<bool> addContact(Contact contact) {
-    return Future.value(true);
+  Future<ContactOperationResult> addContact(Contact contact) {
+    return Future.value(ContactOperationResult.saved);
+  }
+
+  @override
+  Future<ContactOperationResult> openVCard(Contact vCardData) {
+    // TODO: implement openVCard
+    throw UnimplementedError();
   }
 }
 
@@ -25,6 +32,7 @@ void main() {
     AddContactIos addContactIosPlugin = AddContactIos();
     MockAddContactIosPlatform fakePlatform = MockAddContactIosPlatform();
     AddContactIosPlatform.instance = fakePlatform;
-    expect(await addContactIosPlugin.addContact(contact: Contact()), true);
+    expect(await addContactIosPlugin.addContact(contact: Contact()),
+        ContactOperationResult.saved);
   });
 }

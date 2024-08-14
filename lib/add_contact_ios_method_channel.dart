@@ -1,19 +1,36 @@
 import 'package:add_contact_ios/contact_model.dart';
+import 'package:add_contact_ios/enum.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'add_contact_ios_platform_interface.dart';
 
-/// An implementation of [AddContactIosPlatform] that uses method channels.
 class MethodChannelAddContactIos extends AddContactIosPlatform {
-  /// The method channel used to interact with the native platform.
   @visibleForTesting
   final methodChannel = const MethodChannel('add_contact_ios');
 
   @override
-  Future<bool> addContact(Contact contact) async {
-    return await methodChannel
-            .invokeMethod<bool>('addContact', {'contact': contact.toMap()}) ??
-        false;
+  Future<ContactOperationResult> addContact(Contact contact) async {
+    final result = await methodChannel
+        .invokeMethod<String>('addContact', {'contact': contact.toMap()});
+    return _parseResult(result);
+  }
+
+  @override
+  Future<ContactOperationResult> openVCard(Contact contact) async {
+    final result = await methodChannel
+        .invokeMethod<String>('openVCard', {'vCard': contact.toMap()});
+    return _parseResult(result);
+  }
+
+  ContactOperationResult _parseResult(String? result) {
+    switch (result) {
+      case 'saved':
+        return ContactOperationResult.saved;
+      case 'cancelled':
+        return ContactOperationResult.cancelled;
+      default:
+        return ContactOperationResult.error;
+    }
   }
 }

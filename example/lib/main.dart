@@ -35,14 +35,34 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: TextButton(
-            onPressed: () {
-              var contact = mockContact;
-              _addContactIosPlugin.addContact(contact: contact).then((value) {
-                log('Add contact success');
-              });
-            },
-            child: const Text('Add Contact'),
+          child: Column(
+            children: [
+              TextButton(
+                onPressed: () {
+                  var contact = mockContact;
+                  _addContactIosPlugin
+                      .addContact(contact: contact)
+                      .then((value) {
+                    log('Add contact success!:  ${value.toString()}');
+                  }).catchError((onError) {
+                    log('Add contact error!:  ${onError.toString()}');
+                  });
+                },
+                child: const Text('Add Contact'),
+              ),
+              TextButton(
+                onPressed: () {
+                  _addContactIosPlugin
+                      .openVCard(contact: mockContact)
+                      .then((value) {
+                    log('Open vCard Success ${value.toString()}');
+                  }).catchError((onError) {
+                    log('Add contact error ${onError.toString()}');
+                  });
+                },
+                child: const Text('Open Vcard'),
+              ),
+            ],
           ),
         ),
       ),
@@ -105,3 +125,15 @@ final mockContact = Contact(
   androidAccountTypeRaw: "com.google",
   androidAccountName: "johndoe@gmail.com",
 );
+
+const vCardString = '''BEGIN:VCARD
+VERSION:2.1
+N:Hoang;Huu
+FN:Huu Hoang
+ORG:Carrots
+TEL;CELL;VOICE:0376447386
+TEL;WORK;VOICE:0376447386
+ADR;WORK;PREF:;;80 Quoc Lo 13; ;;;
+URL;WORK:carrots.so
+EMAIL;PREF;INTERNET:huu@carrots.so
+END:VCARD''';
