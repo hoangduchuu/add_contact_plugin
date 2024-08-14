@@ -1,7 +1,7 @@
 name: add_contact_ios
-description: "A new Flutter project."
+description: 'The plugin to open "New Contact" popup native ios so user can add contact to device'
 version: 0.0.1
-homepage:
+homepage: https://github.com/hoangduchuu/add_contact_plugin
 
 environment:
   sdk: '>=3.4.4 <4.0.0'
@@ -11,6 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
+  collection: ^1.18.0
+  quiver: ^3.2.1
 
 dev_dependencies:
   flutter_test:

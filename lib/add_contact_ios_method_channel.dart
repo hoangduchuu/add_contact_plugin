@@ -1,3 +1,4 @@
+import 'package:add_contact_ios/contact_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -10,8 +11,7 @@ class MethodChannelAddContactIos extends AddContactIosPlatform {
   final methodChannel = const MethodChannel('add_contact_ios');
 
   @override
-  Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
-    return version;
+  Future<bool> addContact(Contact contact) async {
+    return await methodChannel.invokeMethod<bool>('addContact', {'contact': contact.toMap()}) ?? false;
   }
 }

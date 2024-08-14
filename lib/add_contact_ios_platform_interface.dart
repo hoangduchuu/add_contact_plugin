@@ -1,3 +1,4 @@
+import 'package:add_contact_ios/contact_model.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'add_contact_ios_method_channel.dart';
@@ -23,7 +24,8 @@ abstract class AddContactIosPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+  /// Abstract method overwritten in [MethodChannelContactAdd.addContact]
+  Future<bool> addContact(Contact contact) {
+    throw UnimplementedError('addContact() has not been implemented.');
   }
 }
