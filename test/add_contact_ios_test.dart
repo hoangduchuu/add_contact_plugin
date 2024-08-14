@@ -5,7 +5,9 @@ import 'package:add_contact_ios/add_contact_ios_platform_interface.dart';
 import 'package:add_contact_ios/add_contact_ios_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-class MockAddContactIosPlatform with MockPlatformInterfaceMixin implements AddContactIosPlatform {
+class MockAddContactIosPlatform
+    with MockPlatformInterfaceMixin
+    implements AddContactIosPlatform {
   @override
   Future<bool> addContact(Contact contact) {
     return Future.value(true);

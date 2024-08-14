@@ -29,7 +29,15 @@ class Contact {
     this.socialProfiles,
   });
 
-  String? identifier, displayName, givenName, middleName, prefix, suffix, familyName, company, jobTitle;
+  String? identifier,
+      displayName,
+      givenName,
+      middleName,
+      prefix,
+      suffix,
+      familyName,
+      company,
+      jobTitle;
   String? androidAccountTypeRaw, androidAccountName;
   AndroidAccountType? androidAccountType;
   List<Item>? emails = [];
@@ -61,10 +69,14 @@ class Contact {
     androidAccountName = m["androidAccountName"];
     emails = (m["emails"] as List?)?.map((m) => Item.fromMap(m)).toList();
     phones = (m["phones"] as List?)?.map((m) => Item.fromMap(m)).toList();
-    postalAddresses = (m["postalAddresses"] as List?)?.map((m) => PostalAddress.fromMap(m)).toList();
+    postalAddresses = (m["postalAddresses"] as List?)
+        ?.map((m) => PostalAddress.fromMap(m))
+        .toList();
     avatar = m["avatar"];
     note = m["note"];
-    socialProfiles = (m["socialProfiles"] as List?)?.map((m) => SocialProfile.fromMap(m)).toList();
+    socialProfiles = (m["socialProfiles"] as List?)
+        ?.map((m) => SocialProfile.fromMap(m))
+        .toList();
     try {
       birthday = m["birthday"] != null ? DateTime.parse(m["birthday"]) : null;
     } catch (e) {
@@ -73,10 +85,18 @@ class Contact {
   }
 
   static Map _toMap(Contact contact) {
-    var emails = contact.emails?.map((email) => Item._toMap(email)).toList() ?? [];
-    var phones = contact.phones?.map((phone) => Item._toMap(phone)).toList() ?? [];
-    var postalAddresses = contact.postalAddresses?.map((address) => PostalAddress._toMap(address)).toList() ?? [];
-    var socialProfiles = contact.socialProfiles?.map((profile) => SocialProfile._toMap(profile)).toList() ?? [];
+    var emails =
+        contact.emails?.map((email) => Item._toMap(email)).toList() ?? [];
+    var phones =
+        contact.phones?.map((phone) => Item._toMap(phone)).toList() ?? [];
+    var postalAddresses = contact.postalAddresses
+            ?.map((address) => PostalAddress._toMap(address))
+            .toList() ??
+        [];
+    var socialProfiles = contact.socialProfiles
+            ?.map((profile) => SocialProfile._toMap(profile))
+            .toList() ??
+        [];
 
     final birthday = contact.birthday == null
         ? null
@@ -119,17 +139,27 @@ class Contact {
         jobTitle: jobTitle ?? other.jobTitle,
         androidAccountType: androidAccountType ?? other.androidAccountType,
         androidAccountName: androidAccountName ?? other.androidAccountName,
-        emails: emails == null ? other.emails : emails!.toSet().union(other.emails?.toSet() ?? Set()).toList(),
-        phones: phones == null ? other.phones : phones!.toSet().union(other.phones?.toSet() ?? Set()).toList(),
+        emails: emails == null
+            ? other.emails
+            : emails!.toSet().union(other.emails?.toSet() ?? Set()).toList(),
+        phones: phones == null
+            ? other.phones
+            : phones!.toSet().union(other.phones?.toSet() ?? Set()).toList(),
         postalAddresses: postalAddresses == null
             ? other.postalAddresses
-            : postalAddresses!.toSet().union(other.postalAddresses?.toSet() ?? Set()).toList(),
+            : postalAddresses!
+                .toSet()
+                .union(other.postalAddresses?.toSet() ?? Set())
+                .toList(),
         avatar: avatar ?? other.avatar,
         birthday: birthday ?? other.birthday,
         note: note ?? other.note,
         socialProfiles: socialProfiles == null
             ? other.socialProfiles
-            : socialProfiles!.toSet().union(other.socialProfiles?.toSet() ?? Set()).toList(),
+            : socialProfiles!
+                .toSet()
+                .union(other.socialProfiles?.toSet() ?? Set())
+                .toList(),
       );
 
   /// Returns true if all items in this contact are identical.
@@ -152,8 +182,10 @@ class Contact {
         note == other.note &&
         const DeepCollectionEquality.unordered().equals(phones, other.phones) &&
         const DeepCollectionEquality.unordered().equals(emails, other.emails) &&
-        const DeepCollectionEquality.unordered().equals(postalAddresses, other.postalAddresses) &&
-        const DeepCollectionEquality.unordered().equals(socialProfiles, other.socialProfiles);
+        const DeepCollectionEquality.unordered()
+            .equals(postalAddresses, other.postalAddresses) &&
+        const DeepCollectionEquality.unordered()
+            .equals(socialProfiles, other.socialProfiles);
   }
 
   @override
@@ -194,7 +226,13 @@ class Contact {
 }
 
 class PostalAddress {
-  PostalAddress({this.label, this.street, this.city, this.postcode, this.region, this.country});
+  PostalAddress(
+      {this.label,
+      this.street,
+      this.city,
+      this.postcode,
+      this.region,
+      this.country});
 
   String? label, street, city, postcode, region, country;
 
