@@ -1,3 +1,7 @@
+## 0.0.4
+
+- Apply lint check to the plugin.
+
 ## 0.0.2
 
 - Update README.md

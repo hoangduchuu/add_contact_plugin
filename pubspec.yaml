@@ -1,6 +1,6 @@
 name: add_contact_ios
 description: 'The plugin to open "New Contact" popup native ios so user can add contact to device'
-version: 0.0.3
+version: 0.0.4
 homepage: https://github.com/hoangduchuu/add_contact_plugin
 
 environment:

@@ -1,6 +1,7 @@
+import 'dart:developer';
+
 import 'package:add_contact_ios/contact_model.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:add_contact_ios/add_contact_ios.dart';
@@ -38,7 +39,7 @@ class _MyAppState extends State<MyApp> {
             onPressed: () {
               var contact = mockContact;
               _addContactIosPlugin.addContact(contact: contact).then((value) {
-                print('Add contact success');
+                log('Add contact success');
               });
             },
             child: const Text('Add Contact'),
