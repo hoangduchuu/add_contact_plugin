@@ -1,10 +1,13 @@
 import 'dart:developer';
 
 import 'package:add_contact_ios/contact_model.dart';
+import 'package:add_contact_ios_example/qrcode_utils.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
 import 'package:add_contact_ios/add_contact_ios.dart';
+
+import 'dart:math' as math;
 
 void main() {
   runApp(const MyApp());
@@ -35,34 +38,41 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Column(
-            children: [
-              TextButton(
-                onPressed: () {
-                  var contact = mockContact;
-                  _addContactIosPlugin
-                      .addContact(contact: contact)
-                      .then((value) {
-                    log('Add contact success!:  ${value.toString()}');
-                  }).catchError((onError) {
-                    log('Add contact error!:  ${onError.toString()}');
-                  });
-                },
-                child: const Text('Add Contact'),
-              ),
-              TextButton(
-                onPressed: () {
-                  _addContactIosPlugin
-                      .openVCard(contact: mockContact)
-                      .then((value) {
-                    log('Open vCard Success ${value.toString()}');
-                  }).catchError((onError) {
-                    log('Add contact error ${onError.toString()}');
-                  });
-                },
-                child: const Text('Open Vcard'),
-              ),
-            ],
+          child: Container(
+            width: double.infinity,
+            // random background color
+            color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(0.1),
+            child: Column(
+              children: [
+                TextButton(
+                  onPressed: () {
+                    var contact = mockContact;
+                    var vCard = QrCodeUtils.extractContactInfo(code: vCardString2);
+
+                    _addContactIosPlugin.addContact(contact: mockContact).then((value) {
+                      log('Add contact success!:  ${value.toString()}');
+                    }).catchError((onError) {
+                      log('Add contact error!:  ${onError.toString()}');
+                    });
+                  },
+                  child: const Text('Add Contact'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    var vCard = QrCodeUtils.extractContactInfo(code: vCardString2);
+                    log('vCard: ${vCard?.toMap()}');
+                    _addContactIosPlugin
+                        .openVCard(contact: QrCodeUtils.extractContactInfo(code: vCardString2) ?? Contact())
+                        .then((value) {
+                      log('Open vCard Success ${value.toString()}');
+                    }).catchError((onError) {
+                      log('Add contact error ${onError.toString()}');
+                    });
+                  },
+                  child: const Text('Open Vcard'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -136,4 +146,16 @@ TEL;WORK;VOICE:0376447386
 ADR;WORK;PREF:;;80 Quoc Lo 13; ;;;
 URL;WORK:carrots.so
 EMAIL;PREF;INTERNET:huu@carrots.so
+END:VCARD''';
+
+var vCardString2 = '''BEGIN:VCARD
+VERSION:2.1
+N;CHARSET=UTF-8:Sartori;Nahuel
+FN;CHARSET=UTF-8:Nahuel Sartori
+TEL;HOME;VOICE:645488495
+ORG;CHARSET=UTF-8:Carrot\'s Lab
+TEL;WORK;FAX:08039
+ADR;CHARSET=UTF-8;WORK;PREF:;;Passeig del Mare Nostrum\, 15\, Ciutat Vella;Barcelona;08039;Spain
+EMAIL:sartorinahuel@gmail.com
+URL:gooogle.com
 END:VCARD''';
