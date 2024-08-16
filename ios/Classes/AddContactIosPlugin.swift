@@ -87,19 +87,10 @@ public class AddContactIosPlugin: NSObject, FlutterPlugin, CNContactViewControll
                 CNLabeledValue(label: $0["label"] ?? "", value: $0["value"] as NSString? ?? "")
             }
         }
-
-        if let postalAddresses = data["postalAddresses"] as? [[String: String]] {
-            contact.postalAddresses = postalAddresses.map {
-                let address = CNMutablePostalAddress()
-                address.street = $0["street"] ?? ""
-                address.city = $0["city"] ?? ""
-                address.state = $0["region"] ?? ""
-                address.postalCode = $0["postcode"] ?? ""
-                address.country = $0["country"] ?? ""
-                return CNLabeledValue(label: $0["label"] ?? "", value: address)
-            }
-        }
-
+        if let postalAddresses = createPostalAddresses(from: data["postalAddresses"]) {
+                 contact.postalAddresses = postalAddresses
+             }
+        
         if let socialProfiles = data["socialProfiles"] as? [[String: String]] {
             contact.socialProfiles = socialProfiles.map {
                 let profile = CNSocialProfile(urlString: $0["urlString"],
@@ -110,8 +101,34 @@ public class AddContactIosPlugin: NSObject, FlutterPlugin, CNContactViewControll
             }
         }
 
+    
         return contact
     }
+    
+    private func createPostalAddresses(from data: Any?) -> [CNLabeledValue<CNPostalAddress>]? {
+          guard let nestedOptional = data as? Optional<Any>,
+                let unwrappedData = nestedOptional as? [[String: Any?]] else {
+              print("Failed to unwrap postal addresses data")
+              return nil
+          }
+
+          var labeledAddresses: [CNLabeledValue<CNPostalAddress>] = []
+
+          for addressData in unwrappedData {
+              let address = CNMutablePostalAddress()
+              address.street = (addressData["street"] as? String) ?? ""
+              address.city = (addressData["city"] as? String) ?? ""
+              address.state = (addressData["region"] as? String) ?? ""
+              address.postalCode = (addressData["postcode"] as? String) ?? ""
+              address.country = (addressData["country"] as? String) ?? ""
+              
+              let label = CNLabeledValue<CNPostalAddress>.localizedString(forLabel: (addressData["label"] as? String) ?? "")
+              let labeledAddress = CNLabeledValue(label: label, value: address as CNPostalAddress)
+              labeledAddresses.append(labeledAddress)
+          }
+
+          return labeledAddresses.isEmpty ? nil : labeledAddresses
+      }
 
     private func presentContactViewController(for contact: CNMutableContact, isNewContact: Bool) {
         DispatchQueue.main.async {
