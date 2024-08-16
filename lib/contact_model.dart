@@ -27,6 +27,7 @@ class Contact {
     this.androidAccountName,
     this.note,
     this.socialProfiles,
+    this.urlAddresses,
   });
 
   String? identifier,
@@ -47,6 +48,7 @@ class Contact {
   DateTime? birthday;
   String? note;
   List<SocialProfile>? socialProfiles = [];
+  List<Item>? urlAddresses = [];
 
   String initials() {
     return ((givenName?.isNotEmpty == true ? givenName![0] : "") +
@@ -77,6 +79,7 @@ class Contact {
     socialProfiles = (m["socialProfiles"] as List?)
         ?.map((m) => SocialProfile.fromMap(m))
         .toList();
+    urlAddresses = (m["urlAddresses"] as List?)?.map((m) => Item.fromMap(m)).toList();
     try {
       birthday = m["birthday"] != null ? DateTime.parse(m["birthday"]) : null;
     } catch (e) {
@@ -101,7 +104,7 @@ class Contact {
     final birthday = contact.birthday == null
         ? null
         : "${contact.birthday!.year.toString()}-${contact.birthday!.month.toString().padLeft(2, '0')}-${contact.birthday!.day.toString().padLeft(2, '0')}";
-
+    var urlAddresses = contact.urlAddresses?.map((url) => Item._toMap(url)).toList() ?? [];
     return {
       "identifier": contact.identifier,
       "displayName": contact.displayName,
@@ -121,6 +124,7 @@ class Contact {
       "birthday": birthday,
       "note": contact.note,
       "socialProfiles": socialProfiles,
+      "urlAddresses": urlAddresses,
     };
   }
 
@@ -160,6 +164,12 @@ class Contact {
                 .toSet()
                 .union(other.socialProfiles?.toSet() ?? Set())
                 .toList(),
+        urlAddresses: urlAddresses == null
+            ? other.urlAddresses
+            : urlAddresses!
+                .toSet()
+                .union(other.urlAddresses?.toSet() ?? Set())
+                .toList(),
       );
 
   /// Returns true if all items in this contact are identical.
@@ -185,7 +195,9 @@ class Contact {
         const DeepCollectionEquality.unordered()
             .equals(postalAddresses, other.postalAddresses) &&
         const DeepCollectionEquality.unordered()
-            .equals(socialProfiles, other.socialProfiles);
+            .equals(socialProfiles, other.socialProfiles) &&
+        const DeepCollectionEquality.unordered()
+            .equals(urlAddresses, other.urlAddresses);
   }
 
   @override
@@ -204,6 +216,7 @@ class Contact {
       suffix,
       birthday,
       note,
+      urlAddresses,
     ].where((s) => s != null));
   }
 

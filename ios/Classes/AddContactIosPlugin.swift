@@ -62,6 +62,12 @@ public class AddContactIosPlugin: NSObject, FlutterPlugin, CNContactViewControll
         contact.jobTitle = data["jobTitle"] as? String ?? ""
         contact.note = data["note"] as? String ?? ""
 
+        if let urlAddresses = data["urlAddresses"] as? [[String: String]] {
+                    contact.urlAddresses = urlAddresses.map {
+                        CNLabeledValue(label: $0["label"] ?? "", value: $0["value"] as NSString? ?? "")
+                    }
+                }
+
         if let birthdayString = data["birthday"] as? String {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
