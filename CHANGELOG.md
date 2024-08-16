@@ -1,3 +1,7 @@
+## 0.0.6
+- Update example
+- [FIX]  wrong `postalAddresses`
+- [DEV] add `postalAddresses` method
 ## 0.0.5
 - Add `openVCard` method
 ## 0.0.4
